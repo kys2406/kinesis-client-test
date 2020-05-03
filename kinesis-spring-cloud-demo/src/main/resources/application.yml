@@ -1,0 +1,37 @@
+logging:
+  level:
+    root: DEBUG
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+server:
+  port: 0
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: kinesis_test
+          group: kinesis_test
+          content-type: text/json
+          consumer:
+            concurrentcy: 4
+            shardIteratorType: TRIM_HORIZON
+        output:
+          destination: devel_bizest_data_change
+          content-type: text/json
+
+      kinesis:
+        binder:
+          checkpoint:
+            table: devel_ranking_consumer
+          auto-add-shards: false
+          auto-create-stream: true
+          locks:
+            table: devel_ranking_consumer_locks

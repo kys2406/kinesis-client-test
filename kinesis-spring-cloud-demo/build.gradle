@@ -1,0 +1,37 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+group = 'me.kys2406'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compileOnly group: 'org.projectlombok', name: 'lombok'
+
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-stream'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-stream-binder-kinesis', version: '1.1.0.RELEASE'
+
+
+    annotationProcessor group: 'org.projectlombok', name: 'lombok'
+    testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
