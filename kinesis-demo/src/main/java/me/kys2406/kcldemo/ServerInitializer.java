@@ -21,48 +21,9 @@ public class ServerInitializer implements ApplicationRunner {
 //        ExecutorService executorService = Executors.newFixedThreadPool(8);
 //        executorService.submit(() -> {
 //            StopWatch stopWatch = new StopWatch();
-//
-//            stopWatch.start("syncAllGoodsQa");
-//            syncService.syncAllGoodsQa();
-//            stopWatch.stop();
-//
-//            stopWatch.start("syncAllGoodsEstimate");
-//            syncService.syncAllGoodsEstimate();
-//            stopWatch.stop();
-//
-//            stopWatch.start("syncAllCarts");
-//            syncService.syncAllCarts();
-//            stopWatch.stop();
-//
-//            stopWatch.start("syncAllWishLists");
-//            syncService.syncAllWishLists();
-//            stopWatch.stop();
-//
-//
-//            stopWatch.start("syncAllGoodsRandAdmins");
-//            syncService.syncAllGoodsRandAdmins();
-//            stopWatch.stop();
-//
-//            stopWatch.start("syncAllGoods");
-//            syncService.syncAllGoods();
-//            stopWatch.stop();
-//
-//            stopWatch.start("syncAllBrands");
-//            syncService.syncAllBrands();
-//            stopWatch.stop();
-//
-//            stopWatch.start("syncAllGoodsOptions");
-//            syncService.syncAllGoodsOptions();
-//            stopWatch.stop();
-//
-//            stopWatch.start("syncAllGoodsSummaries");
-//            syncService.syncAllGoodsSummaries();
-//            stopWatch.stop();
-//
-//
-//
-//            stopWatch.start("syncAllOrders");
-//            syncService.syncAllOrders();
+//            IntStream.range(0, 1000).parallel().forEach(value -> {
+//                syncService.sendMessage("test", String.valueOf(value));
+//            });
 //            stopWatch.stop();
 //            log.error("[YS]" + stopWatch.prettyPrint());
 //        });

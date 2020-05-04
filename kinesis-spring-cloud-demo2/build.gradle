@@ -19,14 +19,14 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    compileOnly group: 'org.projectlombok', name: 'lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
 
     compile group: 'org.springframework.cloud', name: 'spring-cloud-stream'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-stream-binder-kinesis', version: '2.0.1.RELEASE'
 
-    annotationProcessor group: 'org.projectlombok', name: 'lombok'
-    testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 }

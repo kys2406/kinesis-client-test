@@ -17,7 +17,7 @@ public class ConsumerProcessor implements ShardRecordProcessor {
     @Override
     public void initialize(InitializationInput initializationInput) {
         shardId = initializationInput.shardId();
-        log.info("[YS] : SHARD ID : {}", shardId);
+        log.error("[YS] : SHARD ID : {}", shardId);
         log.info("[YS] : Initializing @ Sequence: {}", initializationInput.extendedSequenceNumber());
     }
 

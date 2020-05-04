@@ -14,6 +14,8 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
 import software.amazon.awssdk.services.kinesis.KinesisAsyncClient;
 import software.amazon.awssdk.services.kinesis.model.PutRecordRequest;
 import software.amazon.kinesis.common.ConfigsBuilder;
+import software.amazon.kinesis.common.InitialPositionInStream;
+import software.amazon.kinesis.common.InitialPositionInStreamExtended;
 import software.amazon.kinesis.coordinator.Scheduler;
 
 import javax.annotation.Resource;
@@ -57,17 +59,6 @@ public class SyncService {
                 cloudWatchClient,
                 UUID.randomUUID().toString(), consumerProcessorFactory);
 
-//        Scheduler scheduler = new Scheduler(
-//                configsBuilder.checkpointConfig(),
-//                configsBuilder.coordinatorConfig(),
-//                configsBuilder.leaseManagementConfig(),
-//                configsBuilder.lifecycleConfig(),
-//                configsBuilder.metricsConfig(),
-//                configsBuilder.processorConfig(),
-//                configsBuilder.retrievalConfig().initialPositionInStreamExtended(
-//                        InitialPositionInStreamExtended.newInitialPosition(InitialPositionInStream.TRIM_HORIZON)
-//                ));
-
         Scheduler scheduler = new Scheduler(
                 configsBuilder.checkpointConfig(),
                 configsBuilder.coordinatorConfig(),
@@ -75,7 +66,18 @@ public class SyncService {
                 configsBuilder.lifecycleConfig(),
                 configsBuilder.metricsConfig(),
                 configsBuilder.processorConfig(),
-                configsBuilder.retrievalConfig());
+                configsBuilder.retrievalConfig().initialPositionInStreamExtended(
+                        InitialPositionInStreamExtended.newInitialPosition(InitialPositionInStream.TRIM_HORIZON)
+                ));
+
+//        Scheduler scheduler = new Scheduler(
+//                configsBuilder.checkpointConfig(),
+//                configsBuilder.coordinatorConfig(),
+//                configsBuilder.leaseManagementConfig(),
+//                configsBuilder.lifecycleConfig(),
+//                configsBuilder.metricsConfig(),
+//                configsBuilder.processorConfig(),
+//                configsBuilder.retrievalConfig());
 
         consumerExecutor.submit(scheduler);
     }
