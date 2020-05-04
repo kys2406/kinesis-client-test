@@ -18,14 +18,11 @@ spring:
       bindings:
         input:
           destination: kinesis_test
-          group: kinesis_test2
+          group: kinesis_test
           content-type: text/json
           consumer:
             concurrentcy: 4
             shardIteratorType: TRIM_HORIZON
-        output:
-          destination: devel_bizest_data_change
-          content-type: text/json
 
       kinesis:
         binder:

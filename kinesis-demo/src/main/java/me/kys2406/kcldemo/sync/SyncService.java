@@ -3,10 +3,7 @@ package me.kys2406.kcldemo.sync;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-import org.springframework.scheduling.support.PeriodicTrigger;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.services.cloudwatch.CloudWatchAsyncClient;
@@ -21,7 +18,6 @@ import software.amazon.kinesis.coordinator.Scheduler;
 import javax.annotation.Resource;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -37,11 +33,8 @@ public class SyncService {
     @Resource(name = "producerClient")
     private final KinesisAsyncClient producerClient;
 
-    @Resource(name = "consumerExecutor")
-    private final ThreadPoolTaskExecutor consumerExecutor;
-
-    @Resource(name = "producerScheduler")
-    private final ThreadPoolTaskScheduler producerScheduler;
+    @Resource(name = "customExecutor")
+    private final ThreadPoolTaskExecutor customExecutor;
 
     @Value("${kinesis.stream}")
     private String streamName;
@@ -79,11 +72,12 @@ public class SyncService {
 //                configsBuilder.processorConfig(),
 //                configsBuilder.retrievalConfig());
 
-        consumerExecutor.submit(scheduler);
+        customExecutor.submit(scheduler);
     }
 
+
     public void sendMessage(String key, String data) {
-        producerScheduler.schedule(() -> publishRecord(key, data), getTrigger(0));
+        customExecutor.execute(() -> publishRecord(key, data));
     }
 
     private void publishRecord(String key, String data) {
@@ -95,13 +89,7 @@ public class SyncService {
         try {
             producerClient.putRecord(request).get();
         } catch (InterruptedException | ExecutionException e) {
-            log.error(e.getMessage(), e);
-            System.exit(1);
+            e.printStackTrace();
         }
     }
-
-    private Trigger getTrigger(long period) {
-        return new PeriodicTrigger(period, TimeUnit.MILLISECONDS);
-    }
-
 }

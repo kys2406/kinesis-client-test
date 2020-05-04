@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 @Configuration
 @EnableAsync
@@ -14,22 +13,14 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 public class AsyncConfig {
     private final Environment env;
 
-    @Bean(name = "consumerExecutor")
-    public ThreadPoolTaskExecutor consumerExecutor() {
+    @Bean(name = "customExecutor")
+    public ThreadPoolTaskExecutor customExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(8);
         taskExecutor.setMaxPoolSize(8);
         taskExecutor.setQueueCapacity(16);
-        taskExecutor.setThreadNamePrefix("Consumer-");
+        taskExecutor.setThreadNamePrefix("TEST-");
         taskExecutor.initialize();
         return taskExecutor;
-    }
-
-    @Bean(name = "producerScheduler")
-    public ThreadPoolTaskScheduler producerScheduler() {
-        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setPoolSize(8);
-        scheduler.initialize();
-        return scheduler;
     }
 }

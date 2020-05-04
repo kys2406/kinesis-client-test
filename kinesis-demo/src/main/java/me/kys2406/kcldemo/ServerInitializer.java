@@ -6,6 +6,11 @@ import me.kys2406.kcldemo.sync.SyncService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
 
 @Component
 @Slf4j
@@ -16,16 +21,17 @@ public class ServerInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
-        syncService.resister();
+//        syncService.resister();
+        StopWatch stopWatch = new StopWatch();
 
-//        ExecutorService executorService = Executors.newFixedThreadPool(8);
-//        executorService.submit(() -> {
-//            StopWatch stopWatch = new StopWatch();
-//            IntStream.range(0, 1000).parallel().forEach(value -> {
-//                syncService.sendMessage("test", String.valueOf(value));
-//            });
-//            stopWatch.stop();
-//            log.error("[YS]" + stopWatch.prettyPrint());
-//        });
+        ExecutorService executorService = Executors.newFixedThreadPool(8);
+        executorService.submit(() -> {
+            stopWatch.start("test");
+            IntStream.range(999, 1100).parallel().forEach(value -> {
+                syncService.sendMessage("test", String.valueOf(value));
+            });
+            stopWatch.stop();
+            log.info("[YS]" + stopWatch.prettyPrint());
+        });
     }
 }
