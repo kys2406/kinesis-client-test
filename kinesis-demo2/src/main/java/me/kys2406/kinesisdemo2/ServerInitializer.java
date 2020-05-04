@@ -1,8 +1,8 @@
-package me.kys2406.kcldemo;
+package me.kys2406.kinesisdemo2;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.kys2406.kcldemo.sync.SyncService;
+import me.kys2406.kinesisdemo2.sync.SyncService;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
