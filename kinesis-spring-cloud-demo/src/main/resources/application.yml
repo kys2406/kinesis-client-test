@@ -16,9 +16,17 @@ spring:
   cloud:
     stream:
       bindings:
-        input:
+        kinesis_test:
           destination: kinesis_test
           group: kinesis_test
+          content-type: text/json
+          consumer:
+            concurrency: 2
+            shardIteratorType: TRIM_HORIZON
+
+        kinesis_test2:
+          destination: kinesis_test2
+          group: kinesis_test2
           content-type: text/json
           consumer:
             concurrency: 4

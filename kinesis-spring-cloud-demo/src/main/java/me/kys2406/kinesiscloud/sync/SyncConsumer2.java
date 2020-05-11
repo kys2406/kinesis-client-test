@@ -4,19 +4,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
-import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.stereotype.Component;
 
-//@EnableBinding(Source.class)
+@EnableBinding(KinesisTest2Sink.class)
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class SyncProducer {
+public class SyncConsumer2 {
 
-//    private final Source source;
-//
-//    public void sendMessage(String message) {
-//        log.error("[YS] : " + message);
-//    }
+    @StreamListener(KinesisTest2Sink.INPUT)
+    public void receiveMessage(String message) {
+        log.error("[YS] : " + message);
+    }
+
+
 }
