@@ -1,0 +1,9 @@
+cloud:
+  aws:
+    s3:
+      bucket: musinsa.data
+    region:
+      static: ap-northeast-2
+
+server:
+  port: 0
