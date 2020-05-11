@@ -77,13 +77,14 @@ public class SyncService2 {
 
 
     public void sendMessage(String key, String data) {
-        customExecutor.execute(() -> publishRecord(key, data));
+//        customExecutor.execute(() -> publishRecord(key, data));
+        publishRecord(key, data);
     }
 
     private void publishRecord(String key, String data) {
         PutRecordRequest request = PutRecordRequest.builder()
                 .partitionKey(key)
-                .streamName(streamName)
+                .streamName(streamName + "2")
                 .data(SdkBytes.fromUtf8String(String.valueOf(data)))
                 .build();
         try {

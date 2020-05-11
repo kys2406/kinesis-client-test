@@ -77,7 +77,8 @@ public class SyncService {
 
 
     public void sendMessage(String key, String data) {
-        customExecutor.execute(() -> publishRecord(key, data));
+//        customExecutor.execute(() -> publishRecord(key, data));
+        publishRecord(key, data);
     }
 
     private void publishRecord(String key, String data) {

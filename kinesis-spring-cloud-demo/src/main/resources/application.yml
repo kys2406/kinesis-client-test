@@ -16,6 +16,7 @@ spring:
   cloud:
     stream:
       bindings:
+
         kinesis_test:
           destination: kinesis_test
           group: kinesis_test
@@ -34,9 +35,12 @@ spring:
 
       kinesis:
         binder:
-          #          checkpoint:
-          #            table: kinesis_cloud_test
+          checkpoint:
+            table: SpringIntegrationMetadataStore
           auto-add-shards: false
           auto-create-stream: true
-#          locks:
-#            table: kinesis_cloud_test
+          locks:
+            table: SpringIntegrationLockRegistry
+#          kpl-kcl-enabled: true
+#      instance-count: 2
+#      instance-index: 2
